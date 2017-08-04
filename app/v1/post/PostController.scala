@@ -6,6 +6,7 @@ import play.api.Logger
 import play.api.data.Form
 import play.api.libs.json.Json
 import play.api.mvc._
+import scalikejdbc.{AutoSession, ConnectionPool}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -32,6 +33,15 @@ class PostController @Inject()(cc: PostControllerComponents)(implicit ec: Execut
 
   def index: Action[AnyContent] = PostAction.async { implicit request =>
     logger.trace("index: ")
+
+    Class.forName("com.mysql.jdbc.Driver")
+    ConnectionPool.singleton("jdbc:mysql://127.0.0.1/sample?characterEncoding=UTF-8","testuser","testuser")
+
+    implicit val session  = AutoSession
+
+    val users = sql"select * from user".map(User(_)).list.apply()
+    println(users)
+
     postResourceHandler.find.map { posts =>
       Ok(Json.toJson(posts))
     }

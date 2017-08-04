@@ -16,6 +16,13 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0
 libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.2.2" % Test
 libraryDependencies += "io.gatling" % "gatling-test-framework" % "2.2.2" % Test
 
+// scalikejdbc
+libraryDependencies ++= Seq(
+  "org.scalikejdbc" %% "scalikejdbc" % "2.1.2",
+  "mysql" % "mysql-connector-java" % "5.1.29",
+  "ch.qos.logback"    %   "logback-classic" % "1.1.1"
+)
+
 // The Play project itself
 lazy val root = (project in file("."))
   .enablePlugins(Common, PlayScala, GatlingPlugin)
